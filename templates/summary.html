@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Results - Email Tracking Test{% end %}
+{% block main %}
+	<div class="container">
+		<h1>Results</h1>
+		<p>A summary of all recorded tracking data is shown below.<p>
+		<hr>
+		{% if data %}
+		{% for platform, platform_data in data %}
+		<h3>{{ escape(platform) }}</h3>
+		<table class="table table-condensed">
+			<colgroup>
+				<col class="col-xs-2"></col>
+				<col class="col-xs-9"></col>
+			</colgroup>
+			<thead>
+				<tr>
+					<th>Client</th>
+					<th>Data</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for client, client_data in platform_data %}
+				<tr>
+					<td>{{ client }}</td>
+					<td>
+						{% for x in client_data %}
+						<span class="small no-wrap">
+							[<a href="/results/{{ x['id']}}/">{{ escape(x['timestamp']) }}</a>]
+						</span>
+						{% end %}
+					</td>
+				</tr>
+				{% end %}
+			</tbody>
+		</table>
+		{% end %}
+		{% else %}
+		<p>No tracking data has been collected yet.</p>
+		{% end %}
+	</div>
+{% end %}

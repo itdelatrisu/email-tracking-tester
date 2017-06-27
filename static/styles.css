@@ -1,0 +1,37 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  font-family: 'Lato', sans-serif !important;
+  background-image: url(pattern.png);  /* Background pattern from Subtle Patterns */
+  margin-bottom: 30px;
+}
+select:invalid {
+  color: gray;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 30px;
+}
+.panel-transparent {
+  background: none;
+}
+.panel-summary {
+  background: none;
+  padding: 6px 8px;
+  margin-bottom: 6px;
+  margin-right: 6px;
+}
+.summary-text {
+  margin: 0 2px;
+}
+.tooltip-text {
+  font-weight: normal;
+  color: gray;
+}
+.no-wrap {
+  display: inline-block;
+}

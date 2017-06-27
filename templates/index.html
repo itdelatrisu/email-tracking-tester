@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}Email Tracking Test{% end %}
+{% block head %}
+	<link rel="stylesheet" href="/libs/typeaheadjs.css" type="text/css" />
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script src="/libs/typeahead.bundle.min.js"></script>
+	<script src="/form.js"></script>
+{% end %}
+{% block main %}
+	<div class="container">
+		<h1>Email Tracking Test</h1>
+		<p>Fill out the form below to receive a test email.</p>
+		<div class="well">
+			<form action="/submit" method="POST">
+				<div class="form-group">
+					<label for="email">
+						Email address
+						<span class="tooltip-text" data-toggle="tooltip" data-placement="right" title="We won't share your email address. Check out our privacy policy for more details.">[?]</span>
+					</label>
+					<input type="email" id="email" class="form-control" name="email" placeholder="user@example.com" autofocus required>
+				</div>
+				<div class="form-group">
+					<label for="platform">
+						Email platform
+						<span class="tooltip-text" data-toggle="tooltip" data-placement="right" title="Will you open the email using a web browser, desktop client, or mobile app?">[?]</span>
+					</label>
+					<select id="platform" class="form-control" name="platform" required>
+						<option value="" disabled selected> -- select an option -- </option>
+						<option value="web">Web</option>
+						<option value="desktop">Desktop</option>
+						<option value="mobile">Mobile</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="client">
+						Email client
+						<span class="tooltip-text" data-toggle="tooltip" data-placement="right" title="Type the name of your email client. We'll try to show suggestions based on your provider and platform.">[?]</span>
+					</label>
+					<input type="text" id="client" class="form-control typeahead" name="client" required>
+				</div>
+				<button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+			</form>
+		</div>
+	</div>
+{% end %}

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}Results - Email Tracking Test{% end %}
+{% block head %}
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>$(document).ready(function() { $('[data-toggle="tooltip"]').tooltip(); });</script>
+{% end %}
+{% block main %}
+	<div class="container">
+		<h1>Results</h1>
+		<p>ID: <code>{{ escape(id) }}</code><p>
+		<hr>
+
+		{% if user['clicked'] %}
+		<h3>Summary</h3>
+		{% for x in summary %}
+		<div class="panel panel-default panel-summary no-wrap" data-toggle="tooltip" data-placement="bottom" data-container="body" title="{{ x['tooltip'][0 if x['flag'] else 1] }}">
+			{% if x['flag'] %}
+			<span class="glyphicon {{ x['icon'] }}" aria-hidden="true"></span>
+			<span class="sr-only">Yes</span>
+			{% else %}
+			<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+			<span class="sr-only">No</span>
+			{% end %}
+			<span class="summary-text">{{ x['text'][0 if x['flag'] else 1] }}</span>
+		</div>
+		{% end %}
+		{% end %}
+
+		<h3>User Info</h3>
+		<p>The information below was captured in the email submission form.</p>
+		<div class="panel panel-default panel-transparent">
+			<table class="table">
+				<colgroup>
+					<col class="col-xs-3"></col>
+					<col class="col-xs-2"></col>
+					<col class="col-xs-2"></col>
+					<col class="col-xs-4"></col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th>Email Address</th>
+						<th>Platform</th>
+						<th>Client</th>
+						<th>Timestamp</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{ escape(user['email']) }}</td>
+						<td>{{ 'Web' if user['platform'] == 'web' else 'Desktop' if user['platform'] == 'desktop' else 'Mobile' if user['platform'] == 'mobile' else escape(user['platform']) }}</td>
+						<td>{{ escape(user['client']) }}</td>
+						<td>{{ escape(user['timestamp']) }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<h3>Tracking Requests</h3>
+		{% if requests %}
+		<p>All recorded tracking requests are shown below.</p>
+		{% for req in requests %}
+		<div class="panel panel-default panel-transparent">
+			<div class="panel-heading">
+				<h3 class="panel-title">{{ 'Tracking Link' if req['type'] == 'link' else 'Tracking Image (Redirect)' if req['type'] == 'redirect_image' else 'Tracking Image (Landing)' }}</h3>
+			</div>
+			<table class="table table-bordered">
+				<colgroup>
+					<col class="col-xs-1"></col>
+					<col class="col-xs-10"></col>
+				</colgroup>
+				<tbody>
+					<tr>
+						<td><strong>Headers</strong></td>
+						<td>
+							{% for k, v in req['headers'].iteritems() %}
+							{% if v %}
+							<samp><strong>{{ escape(k) }}</strong>: {{ escape(str(v)) }}</samp>
+							<br />
+							{% end %}
+							{% end %}
+						</td>
+					</tr>
+					<tr>
+						<td><strong>Timestamp</strong></td>
+						<td>{{ escape(req['timestamp']) }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		{% end %}
+		{% else %}
+		<p>No tracking requests have been recorded so far.</p>
+		{% end %}
+	</div>
+{% end %}

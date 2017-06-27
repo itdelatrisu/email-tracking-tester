@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}
+{% if success %}
+Form Submitted - Email Tracking Test
+{% else %}
+Form Error - Email Tracking Test
+{% end %}
+{% end %}
+{% block main %}
+	<div class="container">
+		{% if success %}
+		<h1>Form Submitted</h1>
+		<p>
+			Thanks!
+			A test email was sent to <code>{{ email }}</code>, and should be delivered within a few minutes (usually instantly).
+			If you can't find the email, try checking in your spam folder.
+		</p>
+		<p>
+			<strong>Instructions:</strong>
+			Open the test email and click on the tracking link.
+		</p>
+		<p>
+			<a href="/">Click here</a> to submit another email address.
+		</p>
+		{% else %}
+		<h1>Form Error</h1>
+		{% if error %}
+		<p>{% raw error %}</p>
+		{% else %}
+		<p>Oh no! Something went very wrong.</p>
+		<p>
+			<a href="/">Click here</a> to go back.
+		</p>
+		{% end %}
+		{% end %}
+	</div>
+{% end %}
