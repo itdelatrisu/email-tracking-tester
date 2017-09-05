@@ -3,6 +3,7 @@ import tornado.httpserver
 import tornado.ioloop
 import tornado.options
 import tornado.web
+import tornado_http_auth
 import mailer, db, ratelimit, config
 from email.utils import parseaddr
 import os, uuid, socket, struct
@@ -81,7 +82,12 @@ class PrivacyHandler(BaseHandler):
     def get(self):
         self.render('privacy.html')
 
-class ResultsSummaryHandler(BaseHandler):
+class ResultsSummaryHandler(tornado_http_auth.BasicAuthMixin, BaseHandler):
+    def prepare(self):
+        # authenticate user (if necessary)
+        if config.RESULTS_AUTH:
+            self.get_authenticated_user(check_credentials_func=config.RESULTS_CREDS.get, realm='Protected')
+
     def get(self):
         # get user info
         summary = self.application.db.get_user_summary()

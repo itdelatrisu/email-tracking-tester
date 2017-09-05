@@ -31,3 +31,7 @@ IP_RATE_LIMIT = {
 
 # Database location
 DB_PATH = os.path.join(os.path.dirname(__file__), 'results.db')
+
+# Results page authentication
+RESULTS_AUTH = False
+RESULTS_CREDS = {'admin': 'password'}

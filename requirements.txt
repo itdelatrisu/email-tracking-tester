@@ -1,1 +1,2 @@
 tornado==4.5.1
+tornado-http-auth==1.1.0
